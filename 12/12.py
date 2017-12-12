@@ -21,16 +21,16 @@ while len(all_items) > 0:
     groups += 1
     first = all_items.pop()
     todo = collections.deque([first])
-    seen = set()
+    seen = set([first])
 
     while len(todo) > 0:
         item = todo.popleft()
-        if item in all_items:
-            all_items.remove(item)
-        seen.add(item)
         for r in connections[item]:
             if not r in seen:
                 todo.append(r)
+                seen.add(r)
+
+    all_items -= seen
 
     print('{} -> {}'.format(first, len(seen)))
 
